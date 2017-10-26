@@ -1,12 +1,15 @@
 #!/usr/bin/python3
 
 users_list = []
+symbols = ["X", "O"]
 
 def create_users(value):
+    n = 0
     for new_user in range(value):
         user = []
-        name = input("What's your name: ")
-        symbol = input("What symbol do you want to mark your answers: ")
+        name = input("\nWhat's your name: ")
+        symbol = symbols[n]
+        n = 1
         user.append(name)
         user.append(symbol)
         users_list.append(user)
@@ -35,25 +38,25 @@ def victory(lists): #combinations: 1,2,3 | 4,5,6 | 7,8,9 | 1,4,7 | 2,5,8 | 3,6,9
             #Horizontal match
             _i, _v, = 0, 0 #Optional variables to turn columns or rows to 0, to avoid out of range
             if matrix[v][_i] in lists and matrix[v][_i+1] in lists and matrix[v][_i+2] in lists:
-                print("Row match")
+                print("\nRow match", end='\n')
                 print("CONGRATULATIONS, User", lists[0], "Has won!!!!")
                 return 9
 
             #Vertical match
             elif matrix[_v+1][i] in lists and matrix[_v][i] in lists and matrix[_v+2][i] in lists:
-                print("Column match")
+                print("\nColumn match", end='\n')
                 print("CONGRATULATIONS, User", lists[0], "Has won!!!!")
                 return 9
 
             #diagonal \ match
             elif matrix[_v][_i] in lists and matrix[_v+1][_i+1] in lists and matrix[_v+2][_i+2] in lists:
-                print("Diagonal \ Match")
+                print("\nDiagonal \ Match", end='\n')
                 print("CONGRATULATIONS, User", lists[0], "Has won!!!!")
                 return 9
 
             #diagonal / match
             elif matrix[_v+2][_i] in lists and matrix[_v+1][_i+1] in lists and matrix[_v][_i+2] in lists:
-                print("Diagonal / Match")
+                print("\nDiagonal / Match", end='\n')
                 print("CONGRATULATIONS, User", lists[0], "Has won!!!!")
                 return 9
     else:
@@ -62,21 +65,22 @@ def victory(lists): #combinations: 1,2,3 | 4,5,6 | 7,8,9 | 1,4,7 | 2,5,8 | 3,6,9
 
 def game():
     value = 0
-    while True:
-        for user in range(len(users_list)):
-            print("User's", users_list[user][0], "turn")
+    while value < 9:
+        for user in range(len(users_list)):                     
+            print("\nUser's", users_list[user][0], "turn")
             number = int(input("What number do you pick: "))
+            print("\n")
             symbol = users_list[user][1]
             users_list[user].append(number)
             change_value(number, symbol)
             print_board()
             value += victory(users_list[user])
-            if value < 9:
-                continue
-            else:
+            if value >= 9:
+                print("\nWe have a draw here!! nice game")
                 break
+            else:
+                continue
             
-
 matrix = []
 top_row = [1, 2, 3]
 middle_row = [4, 5, 6]
